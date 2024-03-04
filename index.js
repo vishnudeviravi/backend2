@@ -10,10 +10,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('uploads'));
 
+// routes
 app.use(routes);
 
 app.use('*', (req, res) => {
-  console.log(req.url);
   res.status(404).json({ message: 'No Route Found' });
 });
 
