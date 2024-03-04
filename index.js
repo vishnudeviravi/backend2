@@ -13,6 +13,7 @@ app.use(express.static('uploads'));
 app.use(routes);
 
 app.use('*', (req, res) => {
+  console.log(req.url);
   res.status(404).json({ message: 'No Route Found' });
 });
 
