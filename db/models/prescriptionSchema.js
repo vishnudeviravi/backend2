@@ -10,6 +10,10 @@ const schema = Schema(
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
+    appointment: {
+      type: Schema.Types.ObjectId,
+      ref: 'Appointment',
+    },
     message: String,
     medicines: [{ type: Schema.Types.ObjectId, ref: 'Medicine' }],
   },
