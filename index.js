@@ -2,6 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from './db/dbConnection.js';
 import routes from './routes/index.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 
@@ -17,6 +20,6 @@ app.use('*', (req, res) => {
   res.status(404).json({ message: 'No Route Found' });
 });
 
-app.listen(4444, () => {
+app.listen(process.env.PORT, () => {
   console.log('App is Running @ http://localhost:4444/');
 });

@@ -34,13 +34,25 @@ router.post('/login', async (req, res) => {
   if (!isMatching) {
     return res.status(403).json({ error: 'Email or Password incorrect' });
   }
-  const key =
-    'jfi83jh90w4bd2u3r01jnidh0j3q0ej29edjcj390j2309j9jr3j0j4r9j39dj03j9j';
+  const key = process.env.SECRET_KEY;
   const token = jwt.sign({ role: 'DOCTOR', id: doctor._id }, key, {
     expiresIn: '10d',
   });
 
   res.status(200).json({ message: 'Login successfull', token: token });
+});
+
+router.get('/department/:id', async (req, res) => {
+  const { id } = req.params;
+  const doctors = await Doctor.find({ department: id });
+  res.status(200).json(doctors);
+});
+
+router.patch('/profile/:id', async (req, res) => {
+  const { id } = req.params;
+  const body = { ...req.body };
+  const doctor = await Doctor.findByIdAndUpdate(id, body);
+  res.status(200).json({ message: 'Doctor updated' });
 });
 
 export default router;
