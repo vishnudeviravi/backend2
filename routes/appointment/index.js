@@ -2,6 +2,7 @@ import express from 'express';
 import Appointment from '../../db/models/appointmentSchema.js';
 import Slot from '../../db/models/slotSchema.js';
 import checkToken from '../../middlewares/checkToken.js';
+import nodemailer from 'nodemailer';
 
 const router = express.Router();
 
@@ -27,10 +28,27 @@ router.get('/user/:id', checkToken(['USER']), async (req, res) => {
 });
 
 //take appointment
-router.post('/', checkToken(['USER']), async (req, res) => {
+router.post('/', async (req, res) => {
+  let transpoter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'programlearn8@gmail.com',
+      pass: process.env.MAIL_PASS,
+    },
+  });
+
+  let options = {
+    from: 'programlearn8@gmail.com',
+    to: 'ivishnudr@gmail.com',
+    subject: 'YOUR BOOKING CONFIRMED',
+    text: 'Thank you for booking appointment',
+  };
+  transpoter.sendMail(options);
+
   const body = { ...req.body };
   const slot = await Slot.findByIdAndUpdate(body.slot, { status: 'BOOKED' });
   const appointment = await Appointment.create(body);
+
   res.status(201).json({ message: 'Appointment has been taken' });
 });
 
