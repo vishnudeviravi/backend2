@@ -30,5 +30,5 @@ const schema = Schema(
   },
   { timestamps: true }
 );
-const Appointment = model('Appointment', schema);
-export default Appointment;
+const Order = model('Order', schema);
+export default Order;

@@ -13,6 +13,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('uploads'));
 
+app.set('view engine', 'ejs');
+
 // routes
 app.use(routes);
 

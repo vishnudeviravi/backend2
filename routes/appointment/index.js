@@ -8,9 +8,13 @@ const router = express.Router();
 
 //list appointment  by id
 router.get('/detail/:id', checkToken(['DOCTOR', 'USER']), async (req, res) => {
-  const { id } = req.params;
-  const appointments = await Appointment.findById(id);
-  res.status(200).json(appointments);
+  try {
+    const { id } = req.params;
+    const appointments = await Appointment.findById(id);
+    res.status(200).json(appointments);
+  } catch (e) {
+    res.status(500).json(e);
+  }
 });
 
 // list appointment by doctorid
@@ -66,5 +70,17 @@ router.patch(
     res.status(200).json({ message: 'Appointment has been cancelled' });
   }
 );
+
+router.get('/pdf/:id', async (req, res) => {
+  const { id } = req.params;
+
+  const appointment = await Appointment.findById(id).populate([
+    'doctor',
+    'user',
+    'slot',
+  ]);
+
+  res.render('pdf', { appointment: appointment });
+});
 
 export default router;
