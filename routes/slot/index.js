@@ -5,14 +5,14 @@ import checkToken from '../../middlewares/checkToken.js';
 const router = express.Router();
 
 //list slot by doctor
-router.get('/doctor/:id', checkToken(['DOCTOR', 'USER']), async (req, res) => {
+router.get('/doctor/:id', async (req, res) => {
   const { id } = req.params;
   const slots = await Slot.find({ doctor: id });
   res.status(200).json(slots);
 });
 
 //add slot by doctor
-router.post('/doctor', checkToken(['DOCTOR']), async (req, res) => {
+router.post('/doctor', async (req, res) => {
   const body = { ...req.body };
   const slot = await Slot.create(body);
   res.status(200).json(slot);

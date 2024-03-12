@@ -6,6 +6,13 @@
     <title>Document</title>
   </head>
   <body>
-    <h1 style="text-align: center"><%= appointment.user.name %></h1>
+    <div style="border: 1px solid black; margin: 30px auto; width: 500px;padding: 30px;">
+      <p style=>Name: <%= appointment.user.name %></p>
+      <p style=>Email: <%= appointment.user.email %></p>
+      <p style=>Doctor: <%= appointment.doctor.name %></p>
+      <p style=>Slot Time: <%= appointment.slot.startTime %></p>
+      <p style=>Status: <%= appointment.status %></p>
+
+    </div>
   </body>
 </html>
